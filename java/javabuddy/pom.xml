@@ -24,7 +24,6 @@
   </dependencies>
   <modules>
   	<module>core</module>
-  	<module>examples</module>
-    <module>core7</module>
+  	<module>core7</module>
   </modules>
 </project>
