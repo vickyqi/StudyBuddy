@@ -43,18 +43,11 @@ public abstract class Heap {
 	public abstract Heap insert(int value);
 
 	/**
-	 * 从node开始自上而下调整堆
+	 * 调整以node为根节点的堆
 	 * 
 	 * @param node
 	 */
-	public abstract void adjustDownHeap(int node);
-
-	/**
-	 * 从node开始自下而上调整堆
-	 * 
-	 * @param node
-	 */
-	public abstract void adjustUpHeap(int node);
+	public abstract void adjustHeap(int node);
 
 	/**
 	 * 交换元素
