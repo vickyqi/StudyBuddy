@@ -24,7 +24,7 @@ public class MaxHeap extends Heap {
 		// 从最后一个节点的父节点开始构建堆
 		int start = getParentIndex(length - 1);
 		for (; start >= 0; start--) {
-			adjustHeap(start);
+			adjustDownHeap(start);
 		}
 		return this;
 	}
@@ -41,7 +41,7 @@ public class MaxHeap extends Heap {
 		this.data = newData;
 		this.length = length - 1;
 		// 从头开始调整堆
-		adjustHeap(0);
+		adjustDownHeap(0);
 		return this;
 	}
 
@@ -55,15 +55,15 @@ public class MaxHeap extends Heap {
 		newData[length] = value;
 		this.data = newData;
 		this.length = length + 1;
-		// 重新构建堆
-		buildHeap();
+		// 从最后一个节点开始自下而上调整堆
+		adjustUpHeap(this.length - 1);
 		return this;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void adjustHeap(int node) {
+	public void adjustDownHeap(int node) {
 		int right = getRightChildIndex(node);// 右孩子
 		int left = getLeftChildIndex(node);// 左孩子
 		int max = node;// 三者最大的节点的索引
@@ -75,7 +75,18 @@ public class MaxHeap extends Heap {
 		}
 		if (max != node) {// 需要调整
 			swap(node, max);
-			adjustHeap(max);// 递归调整与根节点进行交换的节点，保证下层也是堆
+			adjustDownHeap(max);// 递归调整与根节点进行交换的节点，保证下层也是堆
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void adjustUpHeap(int node) {
+		int parent = getParentIndex(node);// 父节点
+		if (parent >= 0 && data[parent] < data[node]) {
+			swap(node, parent);
+			adjustUpHeap(parent);// 递归调整与根节点进行交换的节点，保证上层也是堆
 		}
 	}
 
@@ -88,8 +99,6 @@ public class MaxHeap extends Heap {
 		Heap heap = new MaxHeap(data);
 		heap.buildHeap().print();
 		heap.remove().print();
-		heap.insert((int) (Math.random() * 100)).print();
-		heap.insert((int) (Math.random() * 100)).print();
 		heap.insert((int) (Math.random() * 100)).print();
 	}
 }
